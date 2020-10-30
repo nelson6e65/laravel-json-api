@@ -94,13 +94,13 @@ class Handler extends ExceptionHandler
 
 	// ...
 
-  public function render($request, Throwable $e)
+  public function register()
   {
-    if ($this->isJsonApi($request, $e)) {
-      return $this->renderJsonApi($request, $e);
-    }
-
-    // do standard exception rendering here...
+    $this->renderable(function (Throwable $e, $request) {
+      if ($this->isJsonApi($request, $e)) {
+        return $this->renderJsonApi($request, $e);
+      }
+    });
   }
 
   protected function prepareException(Throwable $e)
